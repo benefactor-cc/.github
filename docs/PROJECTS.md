@@ -60,6 +60,24 @@ Repository creation could not be executed in the active ChatGPT runtime because 
 - `backend.rs#19` upgraded the immutable `docker/login-action` reference after successful exact-head backend CI; merge `71870054849adaed7a5a1fb10d1b17e68654ea54`.
 - `benefactor-cc-mcp-server.rs#15` upgraded the immutable `taiki-e/install-action` reference after successful exact-head MCP CI; merge `930e9d6f4f597d2bdab6947251ded44f1f272248`.
 
+### Consent-gated Gmail service-account lane
+
+`benefactor-sendgrid-outreach#10` merged the optional exact-batch Gmail delivery lane as `b6007e2871c672b98c629b6e386fcaa5e6ff4d26`. It requires an active `consent_status='opted_in'` marketing record, an exact `CONTACT_BATCH_ID`, shared Postgres reminder/throttle/event ledgers, HTTPS one-click unsubscribe, explicit live confirmation, and a delegated Workspace mailbox with only the `gmail.send` scope.
+
+Semantic review then found correctness gaps in the externally merged head. Follow-up PR `benefactor-sendgrid-outreach#11` repaired them and merged as `7e4129dd0a98cd515c1b8a165a2c109f8032b233` after successful exact-head full repository CI. The current lane now:
+
+- proves the lead's current normalized address is the exact address selected and still opted in inside the transactional claim;
+- rechecks terminal suppression, same-recipient state, active throttles, and recent business/domain contact before claiming;
+- requires the event ledger instead of silently disabling suppression checks;
+- counts active Gmail claims with reminder rows for hourly/daily limits, including accepted messages awaiting reconciliation;
+- stops on Gmail acceptance rather than only successful RDS reconciliation;
+- fails closed when a Gmail-accepted message cannot create exactly one reminder-ledger row;
+- refuses OAuth/Gmail redirects and streams Google responses through a 64 KiB ceiling.
+
+Evidence includes 8/8 focused outreach tests, 6/6 focused transport tests, and successful exact-head repository CI at `a603e46477ae7685ab0cfbece1db82664be67a25`. No Gmail or SendGrid message was sent and no live credential was used during implementation or review.
+
+Code readiness does **not** authorize a production campaign. `DEN-833` remains the operational source of truth for the reviewed recipient manifest, dry run, credentialed 10–20-recipient canary, delivery/reply/unsubscribe reconciliation, and explicit stop/continue decision before any larger batch.
+
 ### Package acceptance boundary
 
 A provisioning lane is complete only when:
