@@ -1,10 +1,138 @@
 {
+  "$schema": "./repository-relationships.schema.json",
+  "audience": "public",
+  "generated": {
+    "complete_for_visibility": "public",
+    "generated_at": "2026-08-05T21:07:32Z",
+    "generator_version": "2026-08-04.1",
+    "inventory_digest": "sha256:91a773469926499ddf4e3c3bf6016870a0e617543f36f5c023a471ef5cbc269a",
+    "managed_by": "ore-repository-relationship-rollout",
+    "omitted_repository_count": 8,
+    "private_repositories_omitted": true,
+    "source": "GitHub GraphQL repository inventory plus reviewed manual declarations"
+  },
+  "owner": {
+    "account_type": "organization",
+    "dotgithub_repository": "benefactor-cc/.github",
+    "github_id": "265349385",
+    "linear_project": {
+      "id": "e1db74d7-4fa3-4580-851d-ca8fc8145127",
+      "name": "github.com/benefactor-cc",
+      "team_id": "eb8ab169-5afe-4b6f-9cab-3f2aa3e887dc",
+      "url": "https://linear.app/denman/project/githubcombenefactor-cc-6bef502a1ef0",
+      "workspace": "denman"
+    },
+    "login": "benefactor-cc",
+    "mapping_id": "context:benefactor-cc"
+  },
+  "private_registry": {
+    "contains_non_public_inventory": true,
+    "digest": "sha256:7f99e344f40f56f60301e7832c7d9cd243bb07631ee4fa5c1a5f55658ac8bde2",
+    "path": "owners/benefactor-cc.json",
+    "repository": "ORESoftware/project-registry"
+  },
+  "relationships": [
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "benefactor-cc/.github",
+      "id": "sha256:fa1ab6ab18dc0910a75beb57e6f4dd97f4aa518770055561ac7adfc21fabd310",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "benefactor-cc/benefactor-cc.github.io",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "benefactor-cc/.github",
+      "id": "sha256:7abd6b5a57bf0b95d3968c3da05f6f1b289552a91ffbc7d07cce19406ffda4eb",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "benefactor-cc/benfactor-cc",
+      "type": "governs"
+    },
+    {
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "kind": "repository-name",
+          "value": "benefactor-cc.github.io"
+        }
+      ],
+      "from": "benefactor-cc/benefactor-cc.github.io",
+      "id": "sha256:4e931035bb13ce17839e8da549d55affb92e0f08c055e152acc7879cf977a07b",
+      "notes": "The conventional *.github.io repository documents the organization profile.",
+      "required": false,
+      "scope": "organization",
+      "status": "inferred",
+      "to": "benefactor-cc/.github",
+      "type": "documents"
+    }
+  ],
+  "repositories": [
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "benefactor-cc/.github",
+      "github_id": "1324047092",
+      "name": ".github",
+      "owner": "benefactor-cc",
+      "roles": [
+        "community-health",
+        "governance",
+        "relationship-registry"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/benefactor-cc/.github",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "benefactor-cc/benefactor-cc.github.io",
+      "github_id": "1172079008",
+      "name": "benefactor-cc.github.io",
+      "owner": "benefactor-cc",
+      "roles": [
+        "documentation-site"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/benefactor-cc/benefactor-cc.github.io",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "benefactor-cc/benfactor-cc",
+      "github_id": "1172071943",
+      "name": "benfactor-cc",
+      "owner": "benefactor-cc",
+      "roles": [
+        "repository"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/benefactor-cc/benfactor-cc",
+      "visibility": "public"
+    }
+  ],
   "schema_version": 1,
-  "organization": "benefactor-cc",
-  "generated_at": null,
-  "repositories": [],
-  "notes": [
-    "Populate from live GitHub inventory; do not infer unverified dependencies.",
-    "Repository-local manifests remain authoritative for exact dependency versions."
-  ]
+  "unresolved_hints": []
 }
