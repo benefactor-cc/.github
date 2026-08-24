@@ -1,0 +1,83 @@
+{
+  "$schema": "./platform-integrations.schema.json",
+  "schema_version": 1,
+  "organization": "benefactor-cc",
+  "audited_at": "2026-08-24",
+  "capabilities": {
+    "observability": {
+      "source": "https://github.com/ores-otel/ores.otel.log",
+      "audited_revision": "ca176fb6768a9750d262a536952268625ffd3a8a",
+      "package_coordinates": [
+        "ores-otel/ores-interfaces@^0.1.0",
+        "oresoftware/next-loggers@^0.1.0"
+      ],
+      "resolution_state": "pending-public-registry",
+      "invariants": [
+        "Applications own OpenTelemetry providers, exporters, flushing, and shutdown",
+        "Logs use the next-loggers/v1 envelope with trace and span correlation",
+        "Payloads, tokens, email addresses, entity identifiers, and other PII are never emitted",
+        "Metric dimensions and log attributes use bounded reviewed vocabularies",
+        "Telemetry failures are best effort and never change product correctness"
+      ]
+    },
+    "sync": {
+      "source": "https://github.com/opto-sync/opto-sync-clients",
+      "audited_revision": "0811142869e45e0cc3fcc2009296e6bdd46b1964",
+      "package_coordinates": [
+        "opto-sync/opto-sync-clients@^0.2.0"
+      ],
+      "resolution_state": "pending-public-registry",
+      "invariants": [
+        "Flutter mobile persists the visible row and durable outbox atomically in SQLite",
+        "Browser storage uses IndexedDB or SQLite Wasm with the same atomic outbox contract",
+        "Every mutation has a permanent mutation identifier and an observed base revision",
+        "Revisions and ordered cursors decide conflicts; timestamps never decide a winner",
+        "JSON and jsonb conflict checks use structural deep equality and three-way merge",
+        "Realtime notifications are wake hints and never replace a durable ordered pull cursor"
+      ]
+    },
+    "authentication": {
+      "source": "https://github.com/shared-auth/shared-auth-lib",
+      "audited_revision": "4972cfd4eee43ddd9130b9c846caff1c5da7ae95",
+      "package_coordinates": [
+        "shared-auth/shared-auth-clients@^0.1.0",
+        "shared-auth/shared-auth-lib@^0.1.1"
+      ],
+      "resolution_state": "pending-public-registry",
+      "invariants": [
+        "Shared Auth verification and direct Supabase user verification race concurrently",
+        "The first verified identity may authenticate without waiting for the slower authority",
+        "One authority error does not cancel or invalidate a success from the other authority",
+        "Both authorities must be definitely invalid before returning unauthenticated",
+        "Timeouts, transport failures, and contradictory identities fail closed as degraded",
+        "Shared Auth roles are authoritative; a direct Supabase identity has no privileged roles",
+        "Service credentials are accepted only by explicitly machine-scoped endpoints"
+      ]
+    },
+    "dependencies": {
+      "source": "https://github.com/zed-pkg/zed-cli",
+      "audited_revision": "d8763b8dcc3bd5c5b6b4b1d13519065a6a2cb99a",
+      "package_coordinates": [
+        "zed-pkg/zed-cli@^0.1.0"
+      ],
+      "resolution_state": "installable",
+      "invariants": [
+        "Every reusable package root declares .zpkg.toml and commits .zpkg.lock",
+        "CI validates the manifest and installs with frozen immutable lock state",
+        "Mutable Git references and unverified locally seeded registry entries are forbidden",
+        "Git submodule revisions and matching Zed source revisions cannot disagree",
+        "Unavailable dependencies remain explicitly pending instead of receiving fabricated locks"
+      ]
+    }
+  },
+  "role_requirements": {
+    "api_service": ["observability", "sync", "authentication", "dependencies"],
+    "client_sdk": ["observability", "sync", "authentication", "dependencies"],
+    "composition_workspace": ["dependencies"],
+    "end_to_end_tests": ["observability", "sync", "authentication", "dependencies"],
+    "interfaces": ["observability", "sync", "authentication", "dependencies"],
+    "mcp_server": ["observability", "authentication", "dependencies"],
+    "sync_service": ["observability", "sync", "authentication", "dependencies"],
+    "web_bff": ["observability", "sync", "authentication", "dependencies"]
+  }
+}
