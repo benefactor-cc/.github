@@ -1,37 +1,53 @@
+## Linear
+
+- Issue or project: https://linear.app/denman/project/githubcombenefactor-cc-6bef502a1ef0
+
 ## Change summary
 
-Describe the user-visible behavior, repositories/components affected, compatibility impact, and rollback path. Mark non-applicable checks as `N/A` with a reason.
+Describe the user-visible behavior, affected repositories and components,
+compatibility impact, rollout or roll-forward path, and rollback constraints.
+Mark non-applicable checks as `N/A` with a reason.
 
-## Review gates
+## Review path
 
-### Change control and dependencies
+- [ ] All commits are on a non-default branch and this pull request is the only proposed path into the default branch.
+- [ ] No generated tool, bot, migration runner, or deployment process writes directly to `main`, `master`, or another protected default branch.
+- [ ] The change is small enough to review, or its staged rollout and follow-up pull requests are identified.
 
-- [ ] This work is on a topic branch; no direct default-branch commit is required.
-- [ ] Cross-repository dependencies are pinned by immutable commit, lockfile, or released Zed package.
-- [ ] Public contracts are generated from the canonical interface/schema source and consumer compatibility was checked.
+## Scope, ownership, and dependencies
+
+- [ ] The change is focused and does not silently cross repository ownership boundaries.
+- [ ] Shared functionality is imported from its owning repository instead of copied into a local implementation.
+- [ ] Cross-repository dependencies are pinned by an immutable commit, lockfile, or released Zed package.
+- [ ] Public contracts are generated from canonical schemas and consumer compatibility was checked.
 - [ ] Breaking changes include migration, rollback, and staged rollout notes.
 
-### SQL, persistence, and state
+## SQL, persistence, and state
 
 - [ ] No SQL changes, or every declaration has a stable organization/domain namespace and an explicit owning repository.
-- [ ] Domain SQL may remain with its owning org, but identity, ordering, checksums, drift detection, and promotion are registered through `declarative-migrations`.
+- [ ] Domain SQL may remain with its owning organization, but identity, ordering, checksums, drift detection, and promotion are registered through `declarative-migrations`.
+- [ ] JSON Schema, generated language interfaces, ORM models, fixtures, and migration declarations were updated and checked deterministically together.
 - [ ] Application startup validates schema compatibility and does not apply production DDL.
-- [ ] Destructive changes, tenant isolation, RLS/authorization, idempotency, and state-machine invariants have evidence.
+- [ ] Destructive changes, backfills, tenant isolation, RLS/authorization, idempotency, and state-machine invariants have evidence.
 
-### Infrastructure and security
+## Infrastructure and security
 
+- [ ] No `*-infra` repository is introduced as a Git submodule under `*-monorepo/apps`.
 - [ ] Application manifests remain app-owned; cluster composition is delegated to `oresoftware/k8s-cluster` and shared components to `oresoftware/k8s-libs-and-shared-defs`.
-- [ ] Workloads use least privilege, restricted pod security, explicit network policy, non-root execution, immutable images, and bounded resources where applicable.
-- [ ] Secrets, credentials, personal data, and user content are excluded from source, logs, fixtures, and build artifacts.
-- [ ] Authentication/authorization failures are fail-closed and sensitive operations are auditable.
+- [ ] Workloads use least privilege, restricted pod security, explicit network policy and egress, non-root execution, immutable images, probes, and bounded resources where applicable.
+- [ ] Secrets, credentials, personal data, user content, and sensitive telemetry are excluded from source, logs, fixtures, and build artifacts.
+- [ ] Authentication and authorization failures are fail closed, and sensitive operations are auditable.
 
-### Verification and observability
+## Validation and observability
 
 - [ ] Zed lifecycle hooks run deterministic format, lint, build, contract, and publish checks.
 - [ ] Unit, integration, adversarial, migration, and end-to-end tests cover the changed behavior in the appropriate test organization.
-- [ ] ORES OTEL trace/correlation propagation is present where applicable, with secret and user-content capture disabled by default.
-- [ ] Test evidence, residual risks, follow-up work, and any intentionally deferred repositories are listed below.
+- [ ] ORES OTEL trace and correlation propagation is present where applicable, with secret and user-content capture disabled by default.
+- [ ] Conflicts were resolved semantically using both sides, relevant history, and cross-repository context.
+- [ ] No destructive, policy-bypass, or history-rewriting operation was executed or recommended.
 
 ## Validation evidence and residual risk
 
-Provide commands, checks, fixtures, test-org run links, migration/drift results, and known limitations.
+List exact commands, hosted check links, fixtures, migration or drift results,
+deployment evidence, known limitations, monitoring, and the reversible
+roll-forward plan.
