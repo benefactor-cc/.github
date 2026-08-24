@@ -25,6 +25,7 @@ Mark non-applicable checks as `N/A` with a reason.
 ## SQL, persistence, and state
 
 - [ ] No SQL changes, or every declaration has a stable organization/domain namespace and an explicit owning repository.
+- [ ] Declarations use the registered logical namespace `<organization>.<domain>` and stable `<domain>_` prefixes where a shared PostgreSQL schema such as `public` is required.
 - [ ] Domain SQL may remain with its owning organization, but identity, ordering, checksums, drift detection, and promotion are registered through `declarative-migrations`.
 - [ ] JSON Schema, generated language interfaces, ORM models, fixtures, and migration declarations were updated and checked deterministically together.
 - [ ] Application startup validates schema compatibility and does not apply production DDL.
@@ -37,10 +38,11 @@ Mark non-applicable checks as `N/A` with a reason.
 - [ ] Workloads use least privilege, restricted pod security, explicit network policy and egress, non-root execution, immutable images, probes, and bounded resources where applicable.
 - [ ] Secrets, credentials, personal data, user content, and sensitive telemetry are excluded from source, logs, fixtures, and build artifacts.
 - [ ] Authentication and authorization failures are fail closed, and sensitive operations are auditable.
+- [ ] Destructive and cross-runtime tests run in the corresponding `*-test` organization or an isolated e2e environment, with teardown evidence.
 
 ## Validation and observability
 
-- [ ] Zed lifecycle hooks run deterministic format, lint, build, contract, and publish checks.
+- [ ] Zed lifecycle hooks run deterministic format, lint, build, contract, and publish checks without bypassing language-native validation.
 - [ ] Unit, integration, adversarial, migration, and end-to-end tests cover the changed behavior in the appropriate test organization.
 - [ ] ORES OTEL trace and correlation propagation is present where applicable, with secret and user-content capture disabled by default.
 - [ ] Conflicts were resolved semantically using both sides, relevant history, and cross-repository context.
@@ -51,3 +53,5 @@ Mark non-applicable checks as `N/A` with a reason.
 List exact commands, hosted check links, fixtures, migration or drift results,
 deployment evidence, known limitations, monitoring, and the reversible
 roll-forward plan.
+
+- [ ] Logs and traces exclude secrets and user content by default and preserve tenant boundaries.
