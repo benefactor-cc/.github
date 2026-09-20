@@ -1,0 +1,27 @@
+schema_version = "ores.stack.system.v1"
+owner = "benefactor-cc"
+default_branch = "main"
+
+[repositories]
+web_server = "{prefix}-web-server.rs"
+api_server = "{prefix}-api-server.rs"
+lambdas = "{prefix}-lambdas"
+infra = "{prefix}-infra"
+monorepo = "{prefix}-monorepo"
+
+[templates.web_server]
+repository = "https://github.com/ORESoftware/ores-web-server.template.rs.git"
+commit = "e63123e9d16d426198ea0b77c362c77688c8314f"
+
+[templates.api_server]
+repository = "https://github.com/ORESoftware/ores-api-server.template.rs.git"
+commit = "3c8cc2ad50a388113262885a549cad4b66096814"
+
+[templates.lambdas]
+repository = "https://github.com/ORESoftware/ores-lambdas-template.git"
+commit = "f9194e4d61c102f41e970c813e31e27ae1b192aa"
+
+[dev]
+compose_file = ".ores-compose.yaml"
+compose_program = "ores-compose"
+local_workspace_env = "ORES_COMPOSE_LOCAL_WORKSPACE_ROOT"
