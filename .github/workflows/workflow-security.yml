@@ -4,13 +4,13 @@ on:
   pull_request:
     paths:
       - ".github/workflows/**"
-      - "scripts/validate_workflow_security.py"
+      - ".github/actions/**"
   push:
     branches:
       - main
     paths:
       - ".github/workflows/**"
-      - "scripts/validate_workflow_security.py"
+      - ".github/actions/**"
   workflow_dispatch:
 
 permissions:
@@ -19,18 +19,24 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
-      - name: Check out exact revision
+      - name: Check out exact candidate
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
-      - name: Assert checkout matches event revision
+      - name: Verify exact candidate
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Validate immutable workflow references
+        uses: ORESoftware/ores-gha-workflows/actions/workflow-security@9dbcf67d4e280cda9b5aec438173add023a79727
+      - name: Prove validation is read-only
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-      - name: Validate immutable action references
-        run: python3 scripts/validate_workflow_security.py
-      - name: Verify policy did not mutate tracked state
-        run: git diff --exit-code
+          test -z "$(git status --porcelain=v1 --untracked-files=all)"
