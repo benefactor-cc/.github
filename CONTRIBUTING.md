@@ -58,3 +58,16 @@ Use a focused feature branch and a draft pull request. Link the relevant issue o
 
 External GitHub Actions must be pinned to full commit SHAs. Workflows must use explicit least-privilege permissions, explicit timeouts, and non-persisted checkout credentials.
 <!-- ore-org-baseline:end -->
+
+## Rust-first scripts and automation
+
+**Do not create or extend first-party Python scripts; use Rust for automation.** This covers build/CI helpers, test runners, code generation, migrations, releases, deployment, audits, developer tooling, and repository maintenance. Prefer maintained Rust CLIs or `cargo xtask`. Small shell/YAML wrappers may invoke Rust when needed; do not replace Python with large opaque shell scripts.
+
+**Treat existing Python scripts as migration debt, not as permission for more Python.** Inventory usage, upstream/downstream callers and environmental assumptions. Migrate with verified parity for flags, exit status, inputs/outputs, failure handling, security checks, and relevant platforms. Run positive and negative regressions and actual CLI/backend smoke tests before removing any working script. A documentation PR alone does not mean that migration or testing has happened.
+
+**Python application/product code may be permitted in specific documented exceptions.** Its owner must explain its application use, scope, justification and review process. Application-specific tests can share that exception; CI tasks, code generators and routine project scripts cannot masquerade as Python applications.
+
+New Rust tooling should document reproducible Cargo commands and include `cargo fmt --check`, `cargo clippy -- -D warnings`, `cargo test`, and relevant end-to-end verification when applicable. Never claim an exact-head CI or source-level test passed unless it actually ran.
+
+An organization's canonical `.github` repository provides community/contributor guidance; GitHub does **not** automatically inherit custom `AGENTS.md`, arbitrary workflow, or policy enforcement files across sibling repositories. Propagate these explicitly.
+
