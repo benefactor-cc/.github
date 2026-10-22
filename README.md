@@ -1,5 +1,7 @@
 # benefactor-cc organization defaults
 
+**Organization scripting policy:** [Rust, not Python scripts](CONTRIBUTING.md#rust-first-scripts-and-automation); documented Python app exceptions only.
+
 This public `.github` repository contains organization-wide community health files, contributor guidance, shared agent policy, and an explicit repository-relationship contract.
 
 See [`PROJECT_AND_REPOSITORY_MAP.md`](PROJECT_AND_REPOSITORY_MAP.md) for the Linear/GitHub source-of-truth model, repository ownership, outreach safety boundaries, and zed-pkg dependency direction.
