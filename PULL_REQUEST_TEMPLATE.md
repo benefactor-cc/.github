@@ -48,6 +48,18 @@ Mark non-applicable checks as `N/A` with a reason.
 - [ ] Conflicts were resolved semantically using both sides, relevant history, and cross-repository context.
 - [ ] No destructive, policy-bypass, or history-rewriting operation was executed or recommended.
 
+## Alternate runner admission (if used)
+
+- [ ] CI ran on the exact proposed head SHA; report the source commit and
+  receiving test-org commit, not merely a green workflow badge.
+- [ ] Any token-free private test-org mirror was reconstructed from reviewed
+  source blobs with a per-file SHA or exact Git-tree comparison; report
+  mismatches as failures and do not copy secrets into the mirror.
+- [ ] The alternate-runner result did not replace required source-org
+  protection, code review, permissions or environment-specific checks.
+- [ ] Temporary mirror branches and test artifacts have an accountable
+  cleanup plan. Experimental runner-probe PRs are never merged as product code.
+
 ## Validation evidence and residual risk
 
 List exact commands, hosted check links, fixtures, migration or drift results,
