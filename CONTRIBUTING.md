@@ -67,6 +67,8 @@ External GitHub Actions must be pinned to full commit SHAs. Workflows must use e
 
 **Python application/product code may be permitted in specific documented exceptions.** Its owner must explain its application use, scope, justification and review process. Application-specific tests can share that exception; CI tasks, code generators and routine project scripts cannot masquerade as Python applications.
 
+**Test harness rule:** Write new first-party test runners, conformance suites, regression checks, CI verification helpers, fixtures generators, and repository audits in **Rust**, not Python. Use `#[test]`, integration tests under `tests/`, or `cargo xtask`, with positive, negative, and boundary cases; make actual compiler/backend execution part of the gate when required. Preserve existing language-native test suites (such as JavaScript tests for JavaScript contracts) until there is a reviewed migration, but do not introduce Python as a new test dependency. Prefer `cargo test --locked` and `cargo fmt --check`; record exact commands and source SHA with each receipt.
+
 New Rust tooling should document reproducible Cargo commands and include `cargo fmt --check`, `cargo clippy -- -D warnings`, `cargo test`, and relevant end-to-end verification when applicable. Never claim an exact-head CI or source-level test passed unless it actually ran.
 
 An organization's canonical `.github` repository provides community/contributor guidance; GitHub does **not** automatically inherit custom `AGENTS.md`, arbitrary workflow, or policy enforcement files across sibling repositories. Propagate these explicitly.
