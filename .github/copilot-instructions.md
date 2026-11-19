@@ -64,3 +64,7 @@ Never print, log, commit, paste into issues, include in fixtures, or expose toke
 
 Use focused branches and pull requests. Link the relevant Linear issue or project. Explain behavior, risks, migration and roll-forward considerations, security impact, tests run, conflicts and their semantic resolution, and cross-repository dependencies. Never report a branch, commit, pull request, merge, deployment, test run, or external update as complete without authoritative remote evidence.
 <!-- ore-org-baseline:end -->
+
+## Rust-first test and automation policy
+
+For **new first-party scripts and tests**, use Rust (`cargo test`, Rust integration tests, or `cargo xtask`); do not write Python test runners, verification scripts, code generators, maintenance utilities, or CI automation. Existing Python automation is migration debt: replace it only with reviewed Rust parity coverage, never by deleting a live check. Python application code is an explicitly documented exception, not a testing-tool exception. Existing language-native tests may remain for their respective runtimes. See [CONTRIBUTING.md](../CONTRIBUTING.md#rust-first-scripts-and-automation) and [issue #38](https://github.com/benefactor-cc/.github/issues/38).
